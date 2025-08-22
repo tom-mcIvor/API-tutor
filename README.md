@@ -11,61 +11,25 @@ It delivers interactive, structured content to help users understand APIs, REST 
 
 **The MVP includes:**
 
-- [ ] **Structured Side Navigation**
-   - Persistent left-hand side nav with **7 clickable tabs**:
-     1. Introduction to APIs
-     2. REST API Fundamentals
-     3. HTTP Methods & Status Codes
-     4. API Authentication
-     5. API Design Patterns
-     6. Testing APIs
-     7. Profile (User Management)
+- [ ] **Structured Side Navigation** — Persistent left-hand side nav with 7 clickable tabs covering Introduction to APIs, REST Fundamentals, HTTP Methods, Authentication, Design Patterns, Testing, and Profile management.
 
-- [ ] **Interactive Content Display**
-   - Each tab loads a dedicated page with rich content, code snippets, and examples.
-   - Syntax highlighting for code samples with VS Code-style theming.
-   - Interactive lesson cards with hover effects and navigation.
+- [ ] **Interactive Content Display** — Each tab loads dedicated pages with rich content, code snippets, and examples featuring VS Code-style syntax highlighting.
 
-- [ ] **Rich Content System**
-   - Comprehensive lesson content with markdown support and JSON metadata.
-   - Individual lesson pages with detailed content and navigation.
-   - Lesson metadata system for organized content management.
+- [ ] **Rich Content System** — Comprehensive lesson content with markdown support, JSON metadata, and organized content management for individual lesson pages.
 
-- [ ] **Interactive UI Components**
-   - Animated lesson cards with hover effects and smooth transitions.
-   - Progress indicators and responsive design elements.
-   - Mobile-first design with collapsible navigation.
+- [ ] **Interactive UI Components** — Animated lesson cards with hover effects, smooth transitions, progress indicators, and mobile-first responsive design.
 
-- [ ] **Comprehensive Learning Material**
-   - Detailed educational content for navigation tabs:
-     1. **Introduction to APIs** - What are APIs, why they matter, real-world examples
-     2. **REST API Fundamentals** - REST principles, resources, endpoints
-     3. **HTTP Methods & Status Codes** - GET, POST, PUT, DELETE, status codes
-     4. **API Authentication** - API keys, OAuth, JWT tokens
-     5. **API Design Patterns** - Best practices, versioning, documentation
-     6. **Testing APIs** - Postman, curl, automated testing
+- [ ] **Comprehensive Learning Material** — Detailed educational content covering API fundamentals, REST principles, HTTP methods & status codes, authentication methods, design patterns, and testing approaches.
 
-- [ ] **Responsive Design**
-   - Fully optimized for desktop, tablet, and mobile viewing.
-   - Collapsible sidebar navigation for mobile devices.
+- [ ] **Responsive Design** — Fully optimized for desktop, tablet, and mobile viewing with collapsible sidebar navigation for smaller devices.
 
-- [ ] **Advanced Search Functionality**
-   - Interactive search bar with real-time feedback.
-   - Search suggestions and topic discovery.
+- [ ] **Advanced Search Functionality** — Interactive search bar with real-time feedback, search suggestions, and topic discovery capabilities.
 
-- [ ] **Error & Loading States**
-   - Comprehensive error handling for missing content or API failures.
-   - Loading spinners and graceful fallbacks throughout the application.
+- [ ] **Error & Loading States** — Comprehensive error handling for missing content or API failures with loading spinners and graceful fallbacks.
 
-- [ ] **Individual Lesson System**
-   - Dedicated lesson pages with detailed content.
-   - Lesson navigation and progress tracking.
-   - JSON-based lesson metadata and markdown content.
+- [ ] **Individual Lesson System** — Dedicated lesson pages with detailed content, lesson navigation, progress tracking, and JSON-based metadata management.
 
-- [ ] **Interactive API Playground**
-   - Built-in interface to make actual API calls and see responses.
-   - Example APIs for practice (JSONPlaceholder, public APIs).
-   - Request/response visualization.
+- [ ] **Interactive API Playground** — Built-in interface to make actual API calls and see responses with example APIs for practice and request/response visualization.
 
 ---
 
