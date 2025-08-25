@@ -1,7 +1,8 @@
 # API Tutor — Learn APIs with Next.js
 
 A modern, interactive learning platform built with Next.js and TypeScript that teaches API development, REST principles, and modern web development practices.
-🌐 **Live Demo:** Coming Soon
+
+🌐 **Live Demo:** [View the deployed frontend here](https://api-tutor-steel.vercel.app/)
 
 ---
 
