@@ -39,15 +39,18 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  @apply dark:bg-gray-800;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #c1c1c1;
+  @apply dark:bg-gray-600;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+  @apply dark:bg-gray-500;
 }
 
 /* Code block styling */
