@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { BookOpen, Code, Globe, Shield, Layers, TestTube, ArrowRight, Clock, Users, Star } from 'lucide-react'
+import { LessonCard } from '@/components/ui/LessonCard'
+import { ProgressIndicator } from '@/components/ui/ProgressIndicator'
 
 const features = [
   {
@@ -29,10 +31,54 @@ const features = [
 ]
 
 const quickStart = [
-  { title: 'Introduction to APIs', href: '/lessons/introduction', duration: '15 min', level: 'Beginner' },
-  { title: 'REST Fundamentals', href: '/lessons/rest-fundamentals', duration: '25 min', level: 'Beginner' },
-  { title: 'HTTP Methods', href: '/lessons/http-methods', duration: '30 min', level: 'Intermediate' },
-  { title: 'API Authentication', href: '/lessons/authentication', duration: '35 min', level: 'Intermediate' }
+  { 
+    title: 'Introduction to APIs', 
+    href: '/lessons/introduction', 
+    duration: '15 min', 
+    level: 'Beginner' as const,
+    description: 'Learn the fundamentals of APIs and how they work',
+    progress: 0,
+    isCompleted: false,
+    isNew: false
+  },
+  { 
+    title: 'REST Fundamentals', 
+    href: '/lessons/rest-fundamentals', 
+    duration: '25 min', 
+    level: 'Beginner' as const,
+    description: 'Understand RESTful architecture principles',
+    progress: 0,
+    isCompleted: false,
+    isNew: false
+  },
+  { 
+    title: 'HTTP Methods', 
+    href: '/lessons/http-methods', 
+    duration: '30 min', 
+    level: 'Intermediate' as const,
+    description: 'Master GET, POST, PUT, DELETE and other HTTP methods',
+    progress: 0,
+    isCompleted: false,
+    isNew: true
+  },
+  { 
+    title: 'API Authentication', 
+    href: '/lessons/authentication', 
+    duration: '35 min', 
+    level: 'Intermediate' as const,
+    description: 'Learn various authentication strategies and security',
+    progress: 0,
+    isCompleted: false,
+    isNew: true
+  }
+]
+
+const progressSteps = [
+  { id: 'intro', title: 'Introduction', isCompleted: false, isActive: true },
+  { id: 'rest', title: 'REST Basics', isCompleted: false, isActive: false },
+  { id: 'methods', title: 'HTTP Methods', isCompleted: false, isActive: false, isLocked: false },
+  { id: 'auth', title: 'Authentication', isCompleted: false, isActive: false, isLocked: false },
+  { id: 'advanced', title: 'Advanced Topics', isCompleted: false, isActive: false, isLocked: true }
 ]
 
 const stats = [
@@ -131,32 +177,30 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {quickStart.map((lesson, index) => (
-              <Link
+              <LessonCard
                 key={index}
+                title={lesson.title}
                 href={lesson.href}
-                className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:border-primary-200 transition-all group dark:bg-gray-700 dark:border-gray-600 dark:hover:border-primary-400"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-600 transition-colors dark:text-white dark:group-hover:text-primary-400">
-                    {lesson.title}
-                  </h3>
-                  <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary-600 transition-colors dark:text-gray-500 dark:group-hover:text-primary-400" />
-                </div>
-                <div className="flex items-center space-x-4 text-sm text-gray-500">
-                  <div className="flex items-center space-x-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{lesson.duration}</span>
-                  </div>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    lesson.level === 'Beginner' 
-                      ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200' 
-                      : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200'
-                  }`}>
-                    {lesson.level}
-                  </span>
-                </div>
-              </Link>
+                duration={lesson.duration}
+                level={lesson.level}
+                description={lesson.description}
+                progress={lesson.progress}
+                isCompleted={lesson.isCompleted}
+                isNew={lesson.isNew}
+              />
             ))}
+          </div>
+
+          {/* Progress Indicator */}
+          <div className="mt-12 bg-white p-6 rounded-xl shadow-sm border border-gray-100 dark:bg-gray-700 dark:border-gray-600">
+            <h3 className="text-lg font-semibold text-gray-900 mb-6 dark:text-white">
+              Your Learning Path
+            </h3>
+            <ProgressIndicator 
+              steps={progressSteps} 
+              orientation="horizontal" 
+              animated={true} 
+            />
           </div>
         </div>
       </div>
