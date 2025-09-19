@@ -189,7 +189,7 @@ export function ApiPlayground() {
           onClick={() => setActiveTab('request')}
           className={`px-6 py-3 font-medium text-sm transition-colors ${
             activeTab === 'request'
-              ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50 dark:text-primary-400 dark:border-primary-400 dark:bg-primary-900/20'
+              ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50 dark:text-primary-300 dark:border-primary-400 dark:bg-primary-800/30'
               : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
           }`}
         >
@@ -199,7 +199,7 @@ export function ApiPlayground() {
           onClick={() => setActiveTab('response')}
           className={`px-6 py-3 font-medium text-sm transition-colors ${
             activeTab === 'response'
-              ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50 dark:text-primary-400 dark:border-primary-400 dark:bg-primary-900/20'
+              ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50 dark:text-primary-300 dark:border-primary-400 dark:bg-primary-800/30'
               : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
           }`}
         >
@@ -220,7 +220,7 @@ export function ApiPlayground() {
           onClick={() => setActiveTab('history')}
           className={`px-6 py-3 font-medium text-sm transition-colors ${
             activeTab === 'history'
-              ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50 dark:text-primary-400 dark:border-primary-400 dark:bg-primary-900/20'
+              ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50 dark:text-primary-300 dark:border-primary-400 dark:bg-primary-800/30'
               : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
           }`}
         >
