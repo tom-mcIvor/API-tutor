@@ -124,6 +124,9 @@ It delivers interactive, structured content to help users understand APIs, REST 
 
 - <span style="color: #22c55e; font-weight: bold;">✅</span> **Interactive API Playground** — Built-in interface to make actual API calls with preset APIs, custom requests, response visualization, and request history.
 
+
+- 🎯 **Prisma Database Connection** — Integrate a Prisma ORM layer with a SQL database.  
+
 ---
 
 ## 🌟 Stretch Goals
