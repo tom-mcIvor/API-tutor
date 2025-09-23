@@ -1,0 +1,207 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Lesson {
+  id            String   @id @db.VarChar(255)
+  title         String   @db.VarChar(500)
+  description   String?  @db.Text
+  category      String?  @db.VarChar(100)
+  level         Level
+  duration      Int?     // in minutes
+  content       String?  @db.LongText // markdown content
+  prerequisites Json?    // array of lesson IDs
+  objectives    Json?    // array of learning objectives
+  tags          Json?    // array of tags
+  slug          String   @unique @db.VarChar(255)
+  orderIndex    Int?     @map("order_index")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  codeExamples         CodeExample[]
+  interactiveExercises InteractiveExercise[]
+  userProgress         UserProgress[]
+
+  @@map("lessons")
+}
+
+model CodeExample {
+  id          String  @id @db.VarChar(255)
+  lessonId    String  @map("lesson_id") @db.VarChar(255)
+  language    String  @db.VarChar(50)
+  title       String  @db.VarChar(500)
+  description String? @db.Text
+  code        String  @db.LongText
+  output      String? @db.Text
+  editable    Boolean @default(false)
+  orderIndex  Int?    @map("order_index")
+
+  // Relations
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@map("code_examples")
+}
+
+model Tutorial {
+  id            String   @id @db.VarChar(255)
+  title         String   @db.VarChar(500)
+  description   String?  @db.Text
+  lessons       Json?    // array of lesson IDs
+  estimatedTime Int?     @map("estimated_time") // in minutes
+  level         Level
+  slug          String   @unique @db.VarChar(255)
+  thumbnail     String?  @db.VarChar(500)
+  tags          Json?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("tutorials")
+}
+
+model InteractiveExercise {
+  id             String                @id @db.VarChar(255)
+  lessonSlug     String                @map("lesson_slug") @db.VarChar(255)
+  type           InteractiveExerciseType
+  title          String                @db.VarChar(500)
+  description    String?               @db.Text
+  difficulty     Difficulty
+  points         Int                   @default(0)
+  timeLimit      Int?                  @map("time_limit") // in seconds
+  hints          Json?                 // array of hint strings
+  exerciseData   Json?                 @map("exercise_data") // type-specific data
+  solution       Json?                 // solution data and explanation
+  validation     Json?                 // validation rules and feedback
+  createdAt      DateTime              @default(now()) @map("created_at")
+  updatedAt      DateTime              @updatedAt @map("updated_at")
+
+  // Relations
+  lesson             Lesson              @relation(fields: [lessonSlug], references: [slug], onDelete: Cascade)
+  exerciseComponents ExerciseComponent[]
+  exerciseAttempts   ExerciseAttempt[]
+
+  @@map("interactive_exercises")
+}
+
+model ExerciseComponent {
+  id            String            @id @db.VarChar(255)
+  exerciseId    String            @map("exercise_id") @db.VarChar(255)
+  componentType ComponentType     @map("component_type")
+  componentData Json?             @map("component_data") // specific data for each component type
+  orderIndex    Int?              @map("order_index")
+
+  // Relations
+  exercise InteractiveExercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@map("exercise_components")
+}
+
+model UserProgress {
+  id           Int       @id @default(autoincrement())
+  userId       String    @map("user_id") @db.VarChar(255)
+  lessonId     String    @map("lesson_id") @db.VarChar(255)
+  completed    Boolean   @default(false)
+  score        Int?
+  timeSpent    Int?      @map("time_spent") // in seconds
+  lastAccessed DateTime? @map("last_accessed")
+  bookmarked   Boolean   @default(false)
+
+  // Relations
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId], name: "unique_user_lesson")
+  @@map("user_progress")
+}
+
+model ExerciseAttempt {
+  id               Int      @id @default(autoincrement())
+  exerciseId       String   @map("exercise_id") @db.VarChar(255)
+  userId           String   @map("user_id") @db.VarChar(255)
+  answer           Json?    // user's answer data
+  isCorrect        Boolean? @map("is_correct")
+  score            Int?
+  timeSpent        Int?     @map("time_spent") // in seconds
+  hintsUsed        Int      @default(0) @map("hints_used")
+  attemptTimestamp DateTime @default(now()) @map("attempt_timestamp")
+
+  // Relations
+  exercise InteractiveExercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@map("exercise_attempts")
+}
+
+model NavigationItem {
+  id         String  @id @db.VarChar(255)
+  title      String  @db.VarChar(255)
+  href       String? @db.VarChar(500)
+  icon       String? @db.VarChar(100)
+  parentId   String? @map("parent_id") @db.VarChar(255)
+  badge      String? @db.VarChar(50)
+  orderIndex Int?    @map("order_index")
+
+  // Self-referential relation
+  parent   NavigationItem?  @relation("NavigationHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children NavigationItem[] @relation("NavigationHierarchy")
+
+  @@map("navigation_items")
+}
+
+model ApiPlaygroundRequest {
+  id          Int                    @id @default(autoincrement())
+  userId      String?                @map("user_id") @db.VarChar(255)
+  name        String?                @db.VarChar(255)
+  method      HttpMethod
+  url         String                 @db.VarChar(1000)
+  headers     Json?
+  body        String?                @db.Text
+  description String?                @db.Text
+  createdAt   DateTime               @default(now()) @map("created_at")
+  updatedAt   DateTime               @updatedAt @map("updated_at")
+
+  @@map("api_playground_requests")
+}
+
+// Enums
+enum Level {
+  beginner
+  intermediate
+  advanced
+}
+
+enum InteractiveExerciseType {
+  code_completion @map("code-completion")
+  api_builder     @map("api-builder")
+  debugging
+  multiple_choice @map("multiple-choice")
+  drag_drop       @map("drag-drop")
+}
+
+enum Difficulty {
+  easy
+  medium
+  hard
+}
+
+enum ComponentType {
+  blank
+  option
+  test_case
+  drag_item
+  drop_zone
+}
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+}
