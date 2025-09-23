@@ -11,7 +11,7 @@
 # 🚀 API Tutor
 ### *Master APIs with Interactive Learning*
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Now-FF6B6B?style=for-the-badge)](https://api-tutor-steel.vercel.app/)
+
 [![Documentation](https://img.shields.io/badge/📚_Docs-Read_Now-4ECDC4?style=for-the-badge)](#-getting-started)
 [![GitHub stars](https://img.shields.io/github/stars/tom-mcIvor/API-tutor?style=for-the-badge&logo=github)](https://github.com/tom-mcIvor/API-tutor/stargazers)
 
