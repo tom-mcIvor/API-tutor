@@ -120,8 +120,10 @@ async function main() {
   ]
 
   for (const item of navigationItems) {
-    await prisma.navigationItem.create({
-      data: item
+    await prisma.navigationItem.upsert({
+      where: { id: item.id },
+      update: item,
+      create: item
     })
   }
 

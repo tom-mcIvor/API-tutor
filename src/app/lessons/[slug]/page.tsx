@@ -19,7 +19,7 @@ export function generateStaticParams() {
 
 export default async function LessonPage({ params }: LessonPageProps) {
   const { slug } = await params
-  const lesson = getLessonBySlug(slug)
+  const lesson = await getLessonBySlug(slug)
 
   if (!lesson) {
     notFound()

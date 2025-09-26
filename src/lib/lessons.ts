@@ -1,55 +1,6 @@
 import { Lesson, Tutorial } from '@/types'
-import { prisma } from './prisma'
 
-// Database-backed lesson functions
-export async function getLessons(): Promise<Lesson[]> {
-  const lessons = await prisma.lesson.findMany({
-    orderBy: {
-      orderIndex: 'asc'
-    },
-    include: {
-      codeExamples: {
-        orderBy: {
-          orderIndex: 'asc'
-        }
-      },
-      interactiveExercises: {
-        include: {
-          exerciseComponents: {
-            orderBy: {
-              orderIndex: 'asc'
-            }
-          }
-        }
-      }
-    }
-  })
-
-  return lessons.map(lesson => ({
-    id: lesson.id,
-    title: lesson.title,
-    description: lesson.description || '',
-    category: lesson.category || 'General',
-    level: lesson.level as 'beginner' | 'intermediate' | 'advanced',
-    duration: lesson.duration || 0,
-    content: lesson.content || '',
-    codeExamples: lesson.codeExamples.map(example => ({
-      id: example.id,
-      language: example.language,
-      title: example.title,
-      description: example.description || '',
-      code: example.code,
-      output: example.output || ''
-    })),
-    prerequisites: lesson.prerequisites as string[] || [],
-    objectives: lesson.objectives as string[] || [],
-    tags: lesson.tags as string[] || [],
-    slug: lesson.slug,
-    order: lesson.orderIndex || 0
-  }))
-}
-
-// Legacy static data for backward compatibility (will be removed)
+// Sample lesson data - in a real app this would come from a database or CMS
 export const lessons: Lesson[] = [
   {
     id: 'intro-to-apis',
@@ -843,84 +794,12 @@ export const tutorials: Tutorial[] = [
   }
 ]
 
-export async function getLessonBySlug(slug: string): Promise<Lesson | null> {
-  const lesson = await prisma.lesson.findUnique({
-    where: { slug },
-    include: {
-      codeExamples: {
-        orderBy: { orderIndex: 'asc' }
-      },
-      interactiveExercises: {
-        include: {
-          exerciseComponents: {
-            orderBy: { orderIndex: 'asc' }
-          }
-        }
-      }
-    }
-  })
-
-  if (!lesson) return null
-
-  return {
-    id: lesson.id,
-    title: lesson.title,
-    description: lesson.description || '',
-    category: lesson.category || 'General',
-    level: lesson.level as 'beginner' | 'intermediate' | 'advanced',
-    duration: lesson.duration || 0,
-    content: lesson.content || '',
-    codeExamples: lesson.codeExamples.map(example => ({
-      id: example.id,
-      language: example.language,
-      title: example.title,
-      description: example.description || '',
-      code: example.code,
-      output: example.output || ''
-    })),
-    prerequisites: lesson.prerequisites as string[] || [],
-    objectives: lesson.objectives as string[] || [],
-    tags: lesson.tags as string[] || [],
-    slug: lesson.slug,
-    order: lesson.orderIndex || 0
-  }
+export function getLessonBySlug(slug: string): Lesson | undefined {
+  return lessons.find(lesson => lesson.slug === slug)
 }
 
-export async function getLessonsByCategory(category: string): Promise<Lesson[]> {
-  const lessons = await prisma.lesson.findMany({
-    where: {
-      category: category
-    },
-    include: {
-      codeExamples: {
-        orderBy: { orderIndex: 'asc' }
-      }
-    },
-    orderBy: { orderIndex: 'asc' }
-  })
-
-  return lessons.map(lesson => ({
-    id: lesson.id,
-    title: lesson.title,
-    description: lesson.description || '',
-    category: lesson.category || 'General',
-    level: lesson.level as 'beginner' | 'intermediate' | 'advanced',
-    duration: lesson.duration || 0,
-    content: lesson.content || '',
-    codeExamples: lesson.codeExamples?.map((example: any) => ({
-      id: example.id,
-      language: example.language,
-      title: example.title,
-      description: example.description || '',
-      code: example.code,
-      output: example.output || ''
-    })) || [],
-    prerequisites: lesson.prerequisites as string[] || [],
-    objectives: lesson.objectives as string[] || [],
-    tags: lesson.tags as string[] || [],
-    slug: lesson.slug,
-    order: lesson.orderIndex || 0
-  }))
+export function getLessonsByCategory(category: string): Lesson[] {
+  return lessons.filter(lesson => lesson.category.toLowerCase() === category.toLowerCase())
 }
 
 export function getTutorialBySlug(slug: string): Tutorial | undefined {
