@@ -1,5 +1,16 @@
 import Link from 'next/link'
-import { BookOpen, Code, Globe, Shield, Layers, TestTube, ArrowRight, Clock, Users, Star } from 'lucide-react'
+import {
+  BookOpen,
+  Code,
+  Globe,
+  Shield,
+  Layers,
+  TestTube,
+  ArrowRight,
+  Clock,
+  Users,
+  Star,
+} from 'lucide-react'
 import { LessonCard } from '@/components/ui/LessonCard'
 import { ProgressIndicator } from '@/components/ui/ProgressIndicator'
 
@@ -8,85 +19,97 @@ const features = [
     icon: BookOpen,
     title: 'Comprehensive Lessons',
     description: 'Learn API fundamentals from basics to advanced concepts',
-    color: 'text-blue-600'
+    color: 'text-blue-600',
   },
   {
     icon: Code,
     title: 'Interactive Playground',
     description: 'Practice API calls with real endpoints and see responses',
-    color: 'text-green-600'
+    color: 'text-green-600',
   },
   {
     icon: Globe,
     title: 'REST Principles',
     description: 'Master RESTful architecture and best practices',
-    color: 'text-purple-600'
+    color: 'text-purple-600',
   },
   {
     icon: Shield,
     title: 'Authentication Methods',
     description: 'Learn various API authentication strategies',
-    color: 'text-red-600'
-  }
+    color: 'text-red-600',
+  },
 ]
 
 const quickStart = [
-  { 
-    title: 'Introduction to APIs', 
-    href: '/lessons/introduction', 
-    duration: '15 min', 
+  {
+    title: 'Introduction to APIs',
+    href: '/lessons/introduction',
+    duration: '15 min',
     level: 'Beginner' as const,
     description: 'Learn the fundamentals of APIs and how they work',
     progress: 0,
     isCompleted: false,
-    isNew: false
+    isNew: false,
   },
-  { 
-    title: 'REST Fundamentals', 
-    href: '/lessons/rest-fundamentals', 
-    duration: '25 min', 
+  {
+    title: 'REST Fundamentals',
+    href: '/lessons/rest-fundamentals',
+    duration: '25 min',
     level: 'Beginner' as const,
     description: 'Understand RESTful architecture principles',
     progress: 0,
     isCompleted: false,
-    isNew: false
+    isNew: false,
   },
-  { 
-    title: 'HTTP Methods', 
-    href: '/lessons/http-methods', 
-    duration: '30 min', 
+  {
+    title: 'HTTP Methods',
+    href: '/lessons/http-methods',
+    duration: '30 min',
     level: 'Intermediate' as const,
     description: 'Master GET, POST, PUT, DELETE and other HTTP methods',
     progress: 0,
     isCompleted: false,
-    isNew: true
+    isNew: true,
   },
-  { 
-    title: 'API Authentication', 
-    href: '/lessons/authentication', 
-    duration: '35 min', 
+  {
+    title: 'API Authentication',
+    href: '/lessons/authentication',
+    duration: '35 min',
     level: 'Intermediate' as const,
     description: 'Learn various authentication strategies and security',
     progress: 0,
     isCompleted: false,
-    isNew: true
-  }
+    isNew: true,
+  },
 ]
 
 const progressSteps = [
   { id: 'intro', title: 'Introduction', isCompleted: false, isActive: true },
   { id: 'rest', title: 'REST Basics', isCompleted: false, isActive: false },
-  { id: 'methods', title: 'HTTP Methods', isCompleted: false, isActive: false, isLocked: false },
-  { id: 'auth', title: 'Authentication', isCompleted: false, isActive: false, isLocked: false },
-  { id: 'advanced', title: 'Advanced Topics', isCompleted: false, isActive: false, isLocked: true }
+  {
+    id: 'methods',
+    title: 'HTTP Methods',
+    isCompleted: false,
+    isActive: false,
+    isLocked: false,
+  },
+  {
+    id: 'auth',
+    title: 'Authentication',
+    isCompleted: false,
+    isActive: false,
+    isLocked: false,
+  },
+  {
+    id: 'advanced',
+    title: 'Advanced Topics',
+    isCompleted: false,
+    isActive: false,
+    isLocked: true,
+  },
 ]
 
-const stats = [
-  { icon: Users, label: 'Active Learners', value: '10,000+' },
-  { icon: BookOpen, label: 'Lessons Available', value: '50+' },
-  { icon: Star, label: 'Success Rate', value: '95%' },
-  { icon: Clock, label: 'Average Completion', value: '2 weeks' }
-]
 
 export default function Home() {
   return (
@@ -99,8 +122,8 @@ export default function Home() {
             <span className="text-primary-600"> Interactive Learning</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto dark:text-gray-400">
-            Learn API development, REST principles, authentication, and best practices 
-            through hands-on exercises and real-world examples.
+            Learn API development, REST principles, authentication, and best
+            practices through hands-on exercises and real-world examples.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -120,22 +143,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="bg-white py-12 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-3">
-                  <stat.icon className="w-8 h-8 text-primary-600" />
-                </div>
-                <div className="text-3xl font-bold text-gray-900 mb-1 dark:text-white">{stat.value}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* Features Section */}
       <div className="py-16 px-6 dark:bg-gray-900">
@@ -145,18 +152,28 @@ export default function Home() {
               Why Choose API Tutor?
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-gray-400">
-              Our platform combines theory with practice to give you a complete understanding of API development.
+              Our platform combines theory with practice to give you a complete
+              understanding of API development.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:shadow-md-dark">
-                <div className={`inline-flex p-3 rounded-lg bg-gray-50 ${feature.color} mb-4`}>
+              <div
+                key={index}
+                className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:shadow-md-dark"
+              >
+                <div
+                  className={`inline-flex p-3 rounded-lg bg-gray-50 ${feature.color} mb-4`}
+                >
                   <feature.icon className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 dark:text-white">{feature.title}</h3>
-                <p className="text-gray-600 text-sm dark:text-gray-400">{feature.description}</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 dark:text-white">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 text-sm dark:text-gray-400">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -171,7 +188,8 @@ export default function Home() {
               Start Your Journey
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              Begin with these foundational lessons and progress at your own pace.
+              Begin with these foundational lessons and progress at your own
+              pace.
             </p>
           </div>
 
@@ -196,10 +214,10 @@ export default function Home() {
             <h3 className="text-lg font-semibold text-gray-900 mb-6 dark:text-white">
               Your Learning Path
             </h3>
-            <ProgressIndicator 
-              steps={progressSteps} 
-              orientation="horizontal" 
-              animated={true} 
+            <ProgressIndicator
+              steps={progressSteps}
+              orientation="horizontal"
+              animated={true}
             />
           </div>
         </div>
@@ -212,7 +230,8 @@ export default function Home() {
             Ready to Become an API Expert?
           </h2>
           <p className="text-xl text-primary-100 mb-8 dark:text-primary-200">
-            Join thousands of developers who have mastered API development with our platform.
+            Join thousands of developers who have mastered API development with
+            our platform.
           </p>
           <Link
             href="/lessons/introduction"
