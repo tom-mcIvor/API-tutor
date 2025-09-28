@@ -41,48 +41,77 @@ const features = [
   },
 ]
 
-const quickStart = [
-  {
-    title: 'Introduction to APIs',
-    href: '/lessons/introduction',
-    duration: '15 min',
-    level: 'Beginner' as const,
-    description: 'Learn the fundamentals of APIs and how they work',
-    progress: 0,
-    isCompleted: false,
-    isNew: false,
-  },
-  {
-    title: 'REST Fundamentals',
-    href: '/lessons/rest-fundamentals',
-    duration: '25 min',
-    level: 'Beginner' as const,
-    description: 'Understand RESTful architecture principles',
-    progress: 0,
-    isCompleted: false,
-    isNew: false,
-  },
-  {
-    title: 'HTTP Methods',
-    href: '/lessons/http-methods',
-    duration: '30 min',
-    level: 'Intermediate' as const,
-    description: 'Master GET, POST, PUT, DELETE and other HTTP methods',
-    progress: 0,
-    isCompleted: false,
-    isNew: true,
-  },
-  {
-    title: 'API Authentication',
-    href: '/lessons/authentication',
-    duration: '35 min',
-    level: 'Intermediate' as const,
-    description: 'Learn various authentication strategies and security',
-    progress: 0,
-    isCompleted: false,
-    isNew: true,
-  },
-]
+// Type for lesson card data
+interface LessonCardData {
+  title: string
+  href: string
+  duration: string
+  level: 'Beginner' | 'Intermediate' | 'Advanced'
+  description: string
+  progress: number
+  isCompleted: boolean
+  isNew: boolean
+}
+
+// Fetch lessons from database API
+async function getLessonsFromAPI(): Promise<LessonCardData[]> {
+  try {
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      }/api/lessons`,
+      {
+        cache: 'no-store',
+      }
+    )
+
+    if (!response.ok) {
+      return []
+    }
+
+    const lessons = await response.json()
+
+    // Transform database lessons to match LessonCard props
+    return lessons.slice(0, 4).map((lesson: any): LessonCardData => ({
+      title: lesson.title,
+      href: `/lessons/${lesson.slug}`,
+      duration: `${lesson.duration} min`,
+      level: (lesson.level.charAt(0).toUpperCase() + lesson.level.slice(1)) as
+        | 'Beginner'
+        | 'Intermediate'
+        | 'Advanced',
+      description: lesson.description,
+      progress: 0,
+      isCompleted: false,
+      isNew: lesson.orderIndex > 2, // Mark newer lessons as "new"
+    }))
+  } catch (error) {
+    console.error('Error fetching lessons:', error)
+    // Fallback to static data if API fails
+    return [
+      {
+        title: 'Introduction to APIs',
+        href: '/lessons/introduction',
+        duration: '15 min',
+        level: 'Beginner' as const,
+        description: 'Learn the fundamentals of APIs and how they work',
+        progress: 0,
+        isCompleted: false,
+        isNew: false,
+      },
+      {
+        title: 'REST Fundamentals',
+        href: '/lessons/rest-fundamentals',
+        duration: '25 min',
+        level: 'Beginner' as const,
+        description: 'Understand RESTful architecture principles',
+        progress: 0,
+        isCompleted: false,
+        isNew: false,
+      },
+    ]
+  }
+}
 
 const progressSteps = [
   { id: 'intro', title: 'Introduction', isCompleted: false, isActive: true },
@@ -110,8 +139,8 @@ const progressSteps = [
   },
 ]
 
-
-export default function Home() {
+export default async function Home() {
+  const quickStart = await getLessonsFromAPI()
   return (
     <div className="min-h-full">
       {/* Hero Section */}
@@ -142,7 +171,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
 
       {/* Features Section */}
       <div className="py-16 px-6 dark:bg-gray-900">

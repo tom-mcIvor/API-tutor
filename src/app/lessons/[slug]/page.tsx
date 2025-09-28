@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Clock, BookOpen, CheckCircle, Target } from 'lucide-react'
-import { getLessonBySlug, lessons } from '@/lib/lessons'
 import { CodeBlock } from '@/components/ui/CodeBlock'
 import { ExerciseSection } from '@/components/interactive/ExerciseSection'
 
@@ -11,24 +10,97 @@ interface LessonPageProps {
   }>
 }
 
-export function generateStaticParams() {
-  return lessons.map((lesson) => ({
+// Type definitions for database lesson
+interface DatabaseLesson {
+  id: string
+  title: string
+  description: string
+  category: string
+  level: 'beginner' | 'intermediate' | 'advanced'
+  duration: number
+  content: string
+  prerequisites: string[]
+  objectives: string[]
+  tags: string[]
+  slug: string
+  orderIndex: number
+  codeExamples: {
+    id: string
+    language: string
+    title: string
+    description: string
+    code: string
+    output: string
+  }[]
+}
+
+// Fetch lesson from database API
+async function getLessonFromAPI(slug: string): Promise<DatabaseLesson | null> {
+  try {
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      }/api/lessons/${slug}`,
+      {
+        cache: 'no-store', // Ensure fresh data from database
+      }
+    )
+
+    if (!response.ok) {
+      return null
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('Error fetching lesson:', error)
+    return null
+  }
+}
+
+// Fetch all lessons for navigation
+async function getAllLessonsFromAPI(): Promise<DatabaseLesson[]> {
+  try {
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      }/api/lessons`,
+      {
+        cache: 'no-store',
+      }
+    )
+
+    if (!response.ok) {
+      return []
+    }
+
+    return await response.json()
+  } catch (error) {
+    console.error('Error fetching lessons:', error)
+    return []
+  }
+}
+
+export async function generateStaticParams() {
+  const lessons = await getAllLessonsFromAPI()
+  return lessons.map((lesson: DatabaseLesson) => ({
     slug: lesson.slug,
   }))
 }
 
 export default async function LessonPage({ params }: LessonPageProps) {
   const { slug } = await params
-  const lesson = await getLessonBySlug(slug)
+  const lesson = await getLessonFromAPI(slug)
 
   if (!lesson) {
     notFound()
   }
 
-  const currentIndex = lessons.findIndex((l) => l.slug === slug)
+  // Get all lessons for navigation
+  const allLessons = await getAllLessonsFromAPI()
+  const currentIndex = allLessons.findIndex((l: DatabaseLesson) => l.slug === slug)
   const nextLesson =
-    currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null
-  const prevLesson = currentIndex > 0 ? lessons[currentIndex - 1] : null
+    currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null
+  const prevLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null
 
   // Convert markdown-style content to JSX (simplified version)
   const renderContent = (content: string) => {
