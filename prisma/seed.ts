@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { lessons } from '../src/lib/lessons'
+import { exercises } from '../src/data/exercises'
 
 const prisma = new PrismaClient({
   log: ['query', 'info', 'warn', 'error'],
@@ -128,6 +129,49 @@ async function main() {
 
     console.log(`✅ Successfully seeded ${lessons.length} lessons`)
 
+    // Seed interactive exercises
+    console.log('🎮 Creating interactive exercises...')
+    let totalExercises = 0
+    
+    for (const [lessonSlug, lessonExercises] of Object.entries(exercises)) {
+      console.log(`  📝 Adding exercises for lesson: ${lessonSlug}`)
+      
+      for (let i = 0; i < lessonExercises.length; i++) {
+        const exercise = lessonExercises[i]
+        
+        try {
+          if (!exercise.id || !exercise.type || !exercise.title) {
+            throw new Error(`Invalid exercise data: missing required fields (id: ${exercise.id}, type: ${exercise.type}, title: ${exercise.title})`)
+          }
+
+          await prisma.interactiveExercise.create({
+            data: {
+              id: exercise.id,
+              lessonSlug: lessonSlug,
+              type: exercise.type.replace('-', '_') as any, // Convert kebab-case to snake_case for enum
+              title: exercise.title,
+              description: exercise.description || '',
+              difficulty: exercise.difficulty as 'easy' | 'medium' | 'hard',
+              points: exercise.points || 0,
+              timeLimit: exercise.timeLimit || null,
+              hints: exercise.hints || [],
+              exerciseData: exercise as any, // Store the full exercise data as JSON
+              solution: exercise.solution ? JSON.parse(JSON.stringify(exercise.solution)) : null,
+              validation: exercise.validation ? JSON.parse(JSON.stringify(exercise.validation)) : null,
+            }
+          })
+          
+          console.log(`    ✅ Added exercise: ${exercise.title}`)
+          totalExercises++
+        } catch (exerciseError) {
+          console.error(`    ❌ Failed to create exercise "${exercise.title}":`, exerciseError)
+          // Continue with other exercises instead of failing completely
+        }
+      }
+    }
+    
+    console.log(`✅ Successfully seeded ${totalExercises} interactive exercises`)
+
     // Create navigation items
     console.log('🧭 Creating navigation items...')
     const navigationItems = [
@@ -209,6 +253,7 @@ async function main() {
     console.log('\n📊 Seeding Summary:')
     console.log(`  • ${lessons.length} lessons created`)
     console.log(`  • ${lessons.reduce((total, lesson) => total + (lesson.codeExamples?.length || 0), 0)} code examples created`)
+    console.log(`  • ${totalExercises} interactive exercises created`)
     console.log(`  • ${navigationItems.length} navigation items created`)
     
   } catch (error) {
