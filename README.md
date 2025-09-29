@@ -125,7 +125,7 @@ It delivers interactive, structured content to help users understand APIs, REST 
 - <span style="color: #22c55e; font-weight: bold;">✅</span> **Interactive API Playground** — Built-in interface to make actual API calls with preset APIs, custom requests, response visualization, and request history.
 
 
-- 🎯 **Prisma Database Connection** — Integrate a Prisma ORM layer with a SQL database.  
+- <span style="color: #22c55e; font-weight: bold;">✅</span> **Prisma Database Connection** — Complete Prisma ORM integration with MySQL database, comprehensive schema, and seed data.
 
 ---
 
@@ -173,8 +173,8 @@ It delivers interactive, structured content to help users understand APIs, REST 
 |:---:|:---:|:---:|:---:|
 | ![Next.js](https://img.shields.io/badge/Next.js-15.1.0-black?style=flat-square&logo=next.js) | ![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white) | ![ESLint](https://img.shields.io/badge/ESLint-8.0+-4B32C3?style=flat-square&logo=eslint) | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel) |
 | ![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white) | ![API Routes](https://img.shields.io/badge/API_Routes-Next.js-black?style=flat-square) | ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black) | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) |
-| ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) | ![Future: Database](https://img.shields.io/badge/Future:_Database-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white) | ![Jest](https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white) | ![CI/CD](https://img.shields.io/badge/CI/CD-Automated-brightgreen?style=flat-square) |
-| ![React](https://img.shields.io/badge/React-18+-61DAFB?style=flat-square&logo=react&logoColor=black) | ![Future: Auth](https://img.shields.io/badge/Future:_Auth-NextAuth.js-blueviolet?style=flat-square) | ![Testing Library](https://img.shields.io/badge/Testing_Library-E33332?style=flat-square&logo=testing-library&logoColor=white) | ![Domain](https://img.shields.io/badge/Domain-Custom-orange?style=flat-square) |
+| ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) | ![Jest](https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white) | ![CI/CD](https://img.shields.io/badge/CI/CD-Automated-brightgreen?style=flat-square) |
+| ![React](https://img.shields.io/badge/React-18+-61DAFB?style=flat-square&logo=react&logoColor=black) | ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white) | ![Testing Library](https://img.shields.io/badge/Testing_Library-E33332?style=flat-square&logo=testing-library&logoColor=white) | ![Domain](https://img.shields.io/badge/Domain-Custom-orange?style=flat-square) |
 
 </div>
 
@@ -182,6 +182,7 @@ It delivers interactive, structured content to help users understand APIs, REST 
 - **Next.js 15** with App Router for modern React applications
 - **TypeScript** for type safety and better developer experience
 - **Tailwind CSS** for utility-first styling and responsive design
+- **Prisma ORM** with MySQL database for data persistence
 - **Lucide React** for beautiful, consistent icons
 - **React Hooks** for efficient state management
 
@@ -236,6 +237,8 @@ api-tutor/
 │   │   └── index.ts          # Shared interfaces
 │   └── data/                 # Static data files
 ├── prisma/                   # Database schema & seeds
+│   ├── schema.prisma         # Complete database schema
+│   └── seed.ts               # Database seeding script
 ├── content/                  # Lesson content (JSON/Markdown)
 ├── public/                   # Static assets
 └── Configuration files...
@@ -304,6 +307,19 @@ api-tutor/
 
 4. **Open in browser**
    Navigate to `http://localhost:3000`
+
+### Database Setup
+
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Run database migrations
+npx prisma db push
+
+# Seed the database
+npx prisma db seed
+```
 
 ### Testing
 
