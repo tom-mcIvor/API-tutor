@@ -47,7 +47,7 @@ A modern, interactive learning platform built with Next.js and TypeScript that t
 |:---:|:---:|:---:|
 | 🏆 **MVP Completion** | **100%** | ✅ Complete |
 | 📦 **Components Built** | **15+** | 🚀 Growing |
-| 🧪 **Tests Written** | **74** | ✅ Passing |
+| 🧪 **Tests Written** | **80+** | ✅ Passing |
 | 🎯 **Features Complete** | **25+** | 🔥 Active |
 | ⭐ **Code Coverage** | **100%** | 💯 Perfect |
 | 🌟 **GitHub Stars** | **Growing** | ⭐ Star Us! |
@@ -186,8 +186,15 @@ It delivers interactive, structured content to help users understand APIs, REST 
 - **React Hooks** for efficient state management
 
 ### 🧪 **Testing & Quality**
-- **Jest** for unit testing with 100% coverage
-- **React Testing Library** for component testing
+- **Jest 30+** for comprehensive unit and integration testing
+- **React Testing Library** for component testing with user interactions
+- **@types/jest** for full TypeScript support in tests
+- **Comprehensive Test Coverage** including:
+  - API endpoint testing with mocked responses
+  - Database operations and seed validation
+  - Frontend component integration tests
+  - Type definition validation
+  - Error handling and edge cases
 - **ESLint** with strict rules for code quality
 - **TypeScript** in strict mode for type safety
 
@@ -216,12 +223,20 @@ api-tutor/
 │   │   │   └── Header.tsx    # Top header
 │   │   └── ui/               # UI components
 │   │       └── CodeBlock.tsx # Code syntax highlighting
+│   ├── __tests__/            # Comprehensive test suite
+│   │   ├── api/              # API endpoint tests
+│   │   ├── components/       # Component tests
+│   │   ├── database/         # Database & seed tests
+│   │   ├── frontend/         # Integration tests
+│   │   ├── lib/              # Utility function tests
+│   │   └── types/            # Type definition tests
 │   ├── lib/                  # Utilities and data
 │   │   └── lessons.ts        # Lesson content and data
 │   ├── types/                # TypeScript type definitions
 │   │   └── index.ts          # Shared interfaces
 │   └── data/                 # Static data files
-├── content/              # Lesson content (JSON/Markdown)
+├── prisma/                   # Database schema & seeds
+├── content/                  # Lesson content (JSON/Markdown)
 ├── public/                   # Static assets
 └── Configuration files...
 ```
@@ -289,6 +304,19 @@ api-tutor/
 
 4. **Open in browser**
    Navigate to `http://localhost:3000`
+
+### Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+```
 
 ### Build for Production
 
