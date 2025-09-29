@@ -13,7 +13,14 @@ const customJestConfig = {
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
-    '!src/app/**', // Exclude Next.js app directory
+    '!src/app/**/page.tsx', // Exclude Next.js pages but allow API routes
+    '!src/app/**/layout.tsx', // Exclude layouts
+    '!src/app/**/loading.tsx', // Exclude loading components
+    '!src/app/**/not-found.tsx', // Exclude not-found components
+  ],
+  testMatch: [
+    '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
+    '<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}',
   ],
 }
 
